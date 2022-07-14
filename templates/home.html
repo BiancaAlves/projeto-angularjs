@@ -1,0 +1,134 @@
+<div ng-include="'./_nav.html'"></div>
+
+<main class="container">
+  <div class="row">
+    <br />
+    <input type="text" ng-model="busca" placeholder="Buscar" />
+    <!-- Filtrar por um campo específico: <input type="text" ng-model="busca.nome" placeholder="Buscar" /> -->
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Nota 1</th>
+        <th>Nota 2</th>
+        <th>Nota 3</th>
+        <th>Média</th>
+        <th></th>
+      </tr>
+
+      <!-- ng-repeat: diretiva de repeticao
+               filter: pipe de filtro -->
+      <tr ng-repeat="aluno in alunos | filter: busca">
+        <td>{{aluno.nome}}</td>
+        <td>{{aluno.email}}</td>
+        <td>{{aluno.nota1}}</td>
+        <td>{{aluno.nota2}}</td>
+        <td>{{aluno.nota3}}</td>
+        <td>{{aluno.media}}</td>
+        <td style="text-align: right">
+          <i
+            class="material-icons blue-text"
+            style="cursor: pointer; margin-right: 22px"
+            ng-click="abrirEditarAluno(aluno)"
+            >edit</i
+          >
+          <i
+            class="material-icons red-text"
+            style="cursor: pointer"
+            ng-click="deletarAluno(aluno)"
+            >delete</i
+          >
+        </td>
+      </tr>
+    </thead>
+  </table>
+
+  <div class="row" style="text-align: right">
+    <a
+      class="waves-effect waves-light btn modal-trigger"
+      style="margin-top: 22px"
+      href="#modal1"
+      ng-click="abreAddAluno()"
+      >Adicionar</a
+    >
+  </div>
+</main>
+
+<!-- Modal -->
+<div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>{{ editando ? 'Editar' : 'Adicionar'}} aluno</h4>
+
+    <div class="row">
+      <div class="input-field col s6 m6 l6">
+        <input
+          type="text"
+          class="validate"
+          ng-model="Aluno.nome"
+          placeholder="Nome"
+        />
+      </div>
+
+      <div class="input-field col s6 m6 l6">
+        <input
+          type="text"
+          class="validate"
+          ng-model="Aluno.email"
+          placeholder="E-mail"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s4 m4 l4">
+        <input
+          type="text"
+          class="validate"
+          ng-model="Aluno.nota1"
+          placeholder="Nota 1"
+        />
+      </div>
+
+      <div class="input-field col s4 m4 l4">
+        <input
+          type="text"
+          class="validate"
+          ng-model="Aluno.nota2"
+          placeholder="Nota 2"
+        />
+      </div>
+
+      <div class="input-field col s4 m4 l4">
+        <input
+          type="text"
+          class="validate"
+          ng-model="Aluno.nota3"
+          placeholder="Nota 3"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+      >Cancelar</a
+    >
+    <a
+      ng-if="!editando"
+      href="#!"
+      class="waves-effect waves-light btn blue"
+      ng-click="addAluno(Aluno)"
+      >Adicionar</a
+    >
+
+    <a
+      ng-if="editando"
+      href="#!"
+      class="waves-effect waves-light btn blue"
+      ng-click="editarAluno(Aluno)"
+      >Salvar</a
+    >
+  </div>
+</div>
